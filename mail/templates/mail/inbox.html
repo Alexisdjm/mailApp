@@ -1,0 +1,88 @@
+{% extends "mail/layout.html" %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static 'mail/styles.css' %}">
+<link rel="stylesheet" href="{% static 'mail/bootstrap.css' %}">
+
+<header>
+    <div class="logo-div">
+        <img width="70px" height="70px" src="{% static 'mail/Harvard_University_shield.png' %}" alt="shield">
+        <h3 style="margin: auto 10px;">Mail</h3>
+    </div>
+    <div class="w-100 searchbar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input class="searchbar" type="text" placeholder="Search email">
+        <i class="fa-solid fa-bars"></i>
+    </div>
+    <div class="w-100 user-email-container">
+        <p class="email-user-text">Welcome, {{ request.user.email }}...<a class="logout-x" href="{% url 'logout' %}"><i class="fa-solid fa-xmark"></i></a></p>
+    </div>
+    
+</header>
+<div class="content-setup">
+    <div class="sidebar">
+        <div class="items-container">
+            <div class="w-100">
+                <div style="width: 90%; margin:0 auto">
+                    <button class="compose-button" id="compose">
+                        <div class="butto-itself">
+                            <i class="fa-solid fa-pen"></i>
+                            <p>Compose</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="sidebar-item" id="inbox">
+                    <div>
+                        <i style="margin: 0 20px;" class="fa-solid fa-inbox"></i>
+                        <span>Inbox</span>
+                    </div>
+                </div>
+                <div class="sidebar-item" id="sent">
+                    <i style="margin: 0 20px;" class="fa-solid fa-paper-plane"></i>
+                    <span>Sent</span>
+                </div>
+                <div class="sidebar-item" id="archived">
+                    <i style="margin: 0 20px;" class="fa-solid fa-box-archive"></i>
+                    <span>Archived</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 0 18px 18px 0;" class="container container-setup">
+        
+        <div id="emails-view"></div>
+        
+        <div id="ver-un-email"></div>
+        
+        <div class="compose-container" id="compose-view">
+            <div class="compose-header">
+                <h3 class="compose-title-text">New Email</h3>
+            </div>
+            <form class="compose-form" id="compose-form" onsubmit="return false">
+                {% csrf_token %}
+                <div class="compose-input-container">
+                    <input disabled class="compose-input" value="{{ request.user.email }}" placeholder="From">
+                </div>
+                <div class="compose-input-container">
+                    <input id="compose-recipients" class="compose-input" placeholder="To">
+                </div>
+                <div class="compose-input-container">
+                    <input class="compose-input" id="compose-subject" placeholder="Subject">
+                </div>
+                <textarea class="compose-input" rows="4" cols="30" autofocus id="compose-body" placeholder="Body"></textarea>
+                <input type="submit" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+    
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'mail/inbox.js' %}"></script>
+{% endblock %}
